@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XPost Lite — Algorithm-Optimized Posting (client-side)</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <span class="logo">𝕏</span>
+    <div>
+      <h1>XPost Lite</h1>
+      <p class="sub">100% in-browser · weights from <a href="https://github.com/xai-org/x-algorithm" target="_blank">xai-org/x-algorithm</a> · no data ever leaves your machine</p>
+    </div>
+  </div>
+  <nav class="tabs">
+    <button class="tab active" data-tab="composer">Composer</button>
+    <button class="tab" data-tab="playbook">Playbook</button>
+  </nav>
+  <div class="topbar-actions">
+    <button id="btnDrafts" class="ghost">Drafts <span id="draftCount" class="badge">0</span></button>
+  </div>
+</header>
+
+<main>
+<section id="tab-composer" class="tabpane active">
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <h2>Compose</h2>
+        <textarea id="composer" placeholder="What's happening?&#10;&#10;Write your post — the algo score updates live…" spellcheck="false"></textarea>
+        <div class="composer-meta">
+          <div class="charwrap">
+            <div id="charRing" class="char-ring"><b id="charPct">0</b></div>
+            <span id="charLabel">0 / 280 weighted</span>
+          </div>
+          <div class="chips">
+            <label class="chip"><input type="checkbox" id="optPremium"> ✦ Premium</label>
+            <label class="chip"><input type="checkbox" id="optPhoto"> 📷 Photo</label>
+            <label class="chip"><input type="checkbox" id="optVideo"> 🎬 Video ≥10s</label>
+            <label class="chip"><input type="checkbox" id="optReply"> Reply</label>
+            <label class="chip"><input type="checkbox" id="optMutual"> Mutuals</label>
+          </div>
+        </div>
+        <div class="row">
+          <label class="inline">Post # today
+            <select id="optSession">
+              <option value="1">1st (full score)</option>
+              <option value="2">2nd (×0.75)</option>
+              <option value="3">3rd (×0.5)</option>
+              <option value="4">4th (×0.38)</option>
+              <option value="5">5th+ (floor ×0.25)</option>
+            </select>
+          </label>
+          <span class="spacer"></span>
+          <button id="btnSaveDraft" class="primary">💾 Save draft</button>
+          <button id="btnClear" class="ghost">Clear</button>
+        </div>
+        <div id="composerWarn" class="overwarn hidden">⚠️ Over the weighted-character limit for this tier (URLs count as 23, CJK double) — X would truncate.</div>
+      </div>
+
+      <details class="card settings">
+        <summary>⚙ Account settings <span class="hint">stored in this browser only</span></summary>
+        <label>Followers <input id="setFollowers" type="number" min="0" value="0"></label>
+        <label>Avg impressions / post <input id="setImpressions" type="number" min="0" value="0"></label>
+        <p class="hint" id="coldStartHint"></p>
+      </details>
+    </div>
+
+    <div class="col">
+      <div class="card scorecard">
+        <h2>Phoenix Score</h2>
+        <div class="scorewrap">
+          <div id="gauge" class="gauge"><span id="scoreNum">–</span></div>
+          <div class="scoremeta">
+            <div id="scoreVerdict" class="verdict">Start typing…</div>
+            <div class="meta-line">weighted score <b id="weightedRaw">–</b></div>
+            <div class="meta-line" id="multLine"></div>
+          </div>
+        </div>
+        <div class="per10k" id="per10k"></div>
+      </div>
+
+      <div class="card">
+        <h2>Signal breakdown <span class="hint">weight × P(action)</span></h2>
+        <div id="contribBars"></div>
+      </div>
+
+      <div class="card">
+        <h2>Compliance <span class="hint">visibility-filtering rules</span></h2>
+        <div id="compliancePanel"></div>
+      </div>
+
+      <div class="card hidden" id="correctionsCard">
+        <h2>Suggested corrections <span class="hint">one-click fixes</span>
+          <button id="btnApplyAll" class="ghost applyall hidden">✨ Apply all</button></h2>
+        <div id="correctionsPanel"></div>
+      </div>
+
+      <div class="card">
+        <h2>Optimizations</h2>
+        <div id="tipsPanel"></div>
+      </div>
+
+      <div class="card hidden" id="draftsCard">
+        <h2>Saved drafts <span class="hint">localStorage — private to this browser</span></h2>
+        <div id="draftsList"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="tab-playbook" class="tabpane">
+  <div class="playgrid" id="playGrid"></div>
+</section>
+</main>
+
+<footer>XPost Lite · runs entirely in your browser · weights mirrored from home-mixer/params/param.rs (sync 2026-08-28)</footer>
+<script src="engine.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
