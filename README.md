@@ -13,9 +13,7 @@ runs and stays in your browser. Open `index.html` and start writing.
 
 - **Locally**: double-click `index.html` (works from `file://` in Chrome/Edge/Firefox), or
 - **GitHub Pages**:
-  1. Create a repo and copy `index.html`, `styles.css`, `engine.js`, `app.js` into it (root or `/docs`)
-  2. Repo → Settings → Pages → Deploy from branch → pick the branch/folder
-  3. Live at `https://<user>.github.io/<repo>/`
+  Live at [https://tespio.github.io/x-post-drafter/](https://tespio.github.io/x-post-drafter/)
 
 ---
 
